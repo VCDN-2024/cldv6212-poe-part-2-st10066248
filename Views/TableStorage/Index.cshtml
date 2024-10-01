@@ -1,0 +1,44 @@
+﻿@model List<CustomerEntity>
+
+@{
+    ViewData["Title"] = "Manage Table Storage";
+}
+
+<h2>Manage Table Storage</h2>
+<p>View and manage customer profiles.</p>
+
+<a href="@Url.Action("Edit", "TableStorage")" class="btn btn-primary">Add New Profile</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any()) // Check if the model is not null and has items
+        {
+            foreach (var profile in Model)
+            {
+                <tr>
+                    <td>@profile.RowKey</td> 
+                    <td>@profile.FirstName @profile.LastName</td>
+                    <td>@profile.Email</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "TableStorage", new { partitionKey = profile.PartitionKey, rowKey = profile.RowKey })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", "TableStorage", new { partitionKey = profile.PartitionKey, rowKey = profile.RowKey })" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No profiles found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

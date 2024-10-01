@@ -1,0 +1,35 @@
+﻿@model List<string>
+
+@{
+    ViewData["Title"] = "View Queue Storage";
+}
+
+<h2>View Queue Storage</h2>
+<p>Messages related to order processing and inventory management:</p>
+
+@if (Model != null && Model.Any())
+{
+    <ul>
+        @foreach (var message in Model)
+        {
+            <li>@message</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No messages found in the queue.</p>
+}
+
+<form asp-action="SendMessage" asp-controller="QueueStorage" method="post">
+    <div class="form-group">
+        <label for="messageContent">Add a new message:</label>
+        <input type="text" name="messageContent" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Message</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-info">@ViewBag.Message</p>
+}

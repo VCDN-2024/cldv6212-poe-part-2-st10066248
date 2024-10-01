@@ -1,0 +1,19 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "File Details";
+}
+
+<h2>File Details</h2>
+
+<div>
+    <h4>File Information</h4>
+    <div>
+        <p><strong>File Name:</strong> @Model</p>
+    </div>
+
+    <a asp-action="DownloadFile" asp-route-fileName="@Model" class="btn btn-primary">Download</a>
+    <a asp-action="DeleteFile" asp-route-fileName="@Model" class="btn btn-danger">Delete</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+

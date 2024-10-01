@@ -1,0 +1,51 @@
+﻿@model List<string>
+
+@{
+    ViewData["Title"] = "Manage File Share Storage";
+}
+
+<h2>Manage File Share Storage</h2>
+<p>Upload and manage contracts and log files.</p>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<form asp-action="Index" asp-controller="FileStorage" method="get">
+    <div class="form-group">
+        <input type="text" name="directoryName" placeholder="Directory Name" class="form-control mt-2" required />
+        <button type="submit" class="btn btn-primary mt-3">View Files</button>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(ViewBag.DirectoryName))
+{
+    <form asp-action="UploadFile" asp-controller="FileStorage" enctype="multipart/form-data" method="post">
+        <h3>Upload File to @ViewBag.DirectoryName</h3>
+        <div class="form-group">
+            <label for="file">Select file to upload:</label>
+            <input type="file" name="file" class="form-control" required />
+            <input type="hidden" name="directoryName" value="@ViewBag.DirectoryName" />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Upload</button>
+    </form>
+
+    <h3>Existing Files in @ViewBag.DirectoryName</h3>
+    <ul>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var file in Model)
+            {
+                <li>
+                    <a href="@Url.Action("DownloadFile", "FileStorage", new { directoryName = ViewBag.DirectoryName, fileName = file })">@file</a>
+                    <a href="@Url.Action("DeleteFile", "FileStorage", new { directoryName = ViewBag.DirectoryName, fileName = file })" class="btn btn-danger btn-sm">Delete</a>
+                </li>
+            }
+        }
+        else
+        {
+            <li>No files found in the directory.</li>
+        }
+    </ul>
+}

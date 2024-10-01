@@ -1,0 +1,27 @@
+﻿@model CustomerEntity
+
+@{
+    ViewData["Title"] = "Delete Customer Profile";
+}
+
+<h2>Delete Customer Profile</h2>
+
+<div>
+    <h4>Are you sure you want to delete this profile?</h4>
+    <div>
+        <p>
+            <strong>Customer ID:</strong> @Model.PartitionKey<br />
+            <strong>Name:</strong> @Model.FirstName @Model.LastName<br />
+            <strong>Email:</strong> @Model.Email
+        </p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="PartitionKey" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+
+

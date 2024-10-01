@@ -1,0 +1,34 @@
+﻿@model List<string> // This ensures that the view expects a list of strings as the model
+
+@{
+    ViewData["Title"] = "Manage Blob Storage";
+}
+
+<h2>Manage Blob Storage</h2>
+<p>Upload new images or multimedia files, or view existing ones.</p>
+
+<form asp-action="UploadImage" asp-controller="BlobStorage" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label for="file">Select file to upload:</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+<h3>Existing Files</h3>
+<ul>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var file in Model)
+        {
+            <li>
+                <a href="@Url.Action("DownloadImage", "BlobStorage", new { fileName = file })">@file</a>
+                <a href="@Url.Action("DeleteBlob", "BlobStorage", new { fileName = file })" class="btn btn-danger btn-sm">Delete</a>
+            </li>
+        }
+    }
+    else
+    {
+        <li>No files available.</li>
+    }
+</ul>

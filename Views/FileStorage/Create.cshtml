@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Upload File to Azure File Share";
+}
+
+<h2>Upload File to Azure File Share</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="UploadFile" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Select file to upload:</label>
+                <input type="file" name="file" class="form-control" />
+            </div>
+            <input type="text" name="directoryName" placeholder="Directory Name" class="form-control mt-2" />
+            <button type="submit" class="btn btn-primary mt-3">Upload File</button>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Back to File List</a>
+</div>
